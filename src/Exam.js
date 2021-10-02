@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState ,useRef} from "react";
+import { Link } from "react-router-dom";
+import Result from "./Result";
 // import {Data} from './Data';
 export default function Exam() {
   const questions = [
@@ -44,18 +45,23 @@ export default function Exam() {
       ],
     },
   ];
-
+  const [name, setName] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
-
+  const [submitButton, setSubmitButton] = useState(false);
+  const inputRef = useRef();
   const nextButton = () => {
+    
     const nextQuestion = currentQuestion + 1;
+    if (questions.length - 1 == nextQuestion) {
+      setSubmitButton(true);
+    }
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
     } else {
       alert("are you want to submit");
-      setShowScore(true)
+      setShowScore(true);
     }
   };
   const preButton = () => {
@@ -70,23 +76,29 @@ export default function Exam() {
   const navButton = (key) => {
     setCurrentQuestion(key - 1);
   };
- 
-  const answerButton=(mark)=>{
-   if(mark)
-   {
-     setTotalScore(totalScore+1);
-   }
-  }
+
+  const answerButton = (mark) => {
+    if (mark) {
+      setTotalScore(totalScore + 1);
+    }
+  };
   console.log(totalScore);
- 
+console.log("inputRef",inputRef)
   return (
-    <>{showScore? (<div>You scored {totalScore} out of {questions.length}</div>):
-        (
-        <><div className="q-body">
+    <>
+      {showScore ? (
+        <Result totalScore={totalScore} questions={questions} />
+      ) : (
+        <>
+          <div className="q-body">
             {questions.map((item) => {
               return (
                 <button
-                  className="button"
+                  className={
+                    item.id === currentQuestion + 1
+                      ? " button active"
+                      : "button"
+                  }
                   key={item.id}
                   onClick={() => navButton(item.id)}
                 >
@@ -96,33 +108,52 @@ export default function Exam() {
             })}
           </div>
           <div className="exam-container">
-          <div className="row">
-          <div className="questions-wraper">
-            <h1 className="q-heading">{currentQuestion + 1}</h1>
-            <h5 className="question">
-              {questions[currentQuestion].questionText}
-            </h5>
-            <ol className="options">
-              {questions[currentQuestion].answerOptions.map((item,index) => {
-                return (
-                  <>
-                    <button className="options-li" key={index} onClick={()=>answerButton(item.isCorrect)}>{item.answerText}</button>
-                  </>
-                );
-              })}
-            </ol>
+            <div className="row">
+              <div className="questions-wraper">
+                <h1 className="q-heading"> Question : {currentQuestion + 1}</h1>
+                <h5 className="question">
+                  {questions[currentQuestion].questionText}
+                </h5>
+                <ol className="options">
+                  {questions[currentQuestion].answerOptions.map(
+                    (item, index) => {
+                      return (
+                        <div className="radio-label">
+                          <input
+                            type="radio"
+                            name="ans"
+                            id="ans"
+                           className="options-radio"
+                           ref={inputRef} 
+                            key={index}
+                            onChange={() => answerButton(item.isCorrect)}
+                          />
+                          <label className="options-label" htmlFor="ans">
+                            {item.answerText}
+                          </label>
+                        </div>
+                      );
+                    }
+                  )}
+                </ol>
+              </div>
+            </div>
+
+            <button className="button btn-1" onClick={preButton}>
+              Previous Question
+            </button>
+            {submitButton ? (
+              <button className="button btn-2 btn-3" onClick={nextButton}>
+                Submit Exam
+              </button>
+            ) : (
+              <button className="button btn-2" onClick={nextButton}>
+                Next Question
+              </button>
+            )}
           </div>
-        </div>
-
-        <button className="button btn-1" onClick={preButton}>
-          Pre Q
-        </button>
-
-        <button className="button btn-2" onClick={nextButton}>
-          NextQuestion
-        </button>
-      </div></>
-        )}
+        </>
+      )}
     </>
   );
 }
