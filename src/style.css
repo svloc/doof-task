@@ -109,16 +109,19 @@ body {
 .btn-green:focus{
   box-shadow: 0 0 0 0.12rem #04aa6d !important;
 }
-
+button[disabled] {
+  cursor: not-allowed;
+}
 /* login page start */
-
+.box-shadow-light{
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
 .input-container {
   flex-direction: column;
   width: 350px;
   padding: 1rem 1.5rem;
   padding-top: 0; 
   background-color: #fff;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
   border-radius: 5px;
 }
 .form-input {
@@ -144,7 +147,7 @@ input:-internal-autofill-selected {
 
 .text-red{
   color: red;
-  font-size: 80%;
+  font-size: 90%;
 }
 
 
@@ -161,16 +164,7 @@ input:-internal-autofill-selected {
 .row {
   display: flex;
 }
-.q-body {
-  width: 66%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-  justify-content: center;
-  align-items: center;
-  margin: 2em auto;
-  max-width: 1000px;
-}
+
 .questions-wraper {
   width: 100%;
 }
@@ -184,8 +178,10 @@ input:-internal-autofill-selected {
 
 
 .options-label {
-  margin-left: 0.5rem
+  margin-left: 0.5rem;
+  cursor: pointer;
 }
+
 .options-radio:hover {
   cursor: pointer;
 }

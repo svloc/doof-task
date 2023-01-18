@@ -1,0 +1,14 @@
+.q-body {
+    width: 66%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2em auto;
+    max-width: 1000px;
+  }
+
+.mr-1{
+  margin-right: 1rem;
+}

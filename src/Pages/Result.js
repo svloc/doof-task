@@ -7,7 +7,7 @@ export default function Result(props) {
         <h1>
           You scored <span>{props.totalScore}</span> out of {props.questions.length}
         </h1>
-        <Link to="/"><button className="btn btn-black">Back to Home</button></Link>
+        <Link to="/"><button className="btn btn-black">Back to Login</button></Link>
       </div>
     </>
   );
